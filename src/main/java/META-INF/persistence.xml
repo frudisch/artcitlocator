@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="artcitlocator">
+
+		<class>artcitlocator.crawling.wikipedia.database.entity.Archive</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Category</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Categorylink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.ChangeTag</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Config</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.ExternalUser</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Externallink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Filearchive</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Hitcounter</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Image</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Imagelink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Interwiki</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Ipblock</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Iwlink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Job</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.L10nCache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Langlink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.LogSearch</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Logging</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.ModuleDep</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.MsgResource</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.MsgResourceLink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Objectcache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Oldimage</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Page</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.PageProp</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.PageRestriction</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Pagelink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.ProtectedTitle</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Querycache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.QuerycacheInfo</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Querycachetwo</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Recentchange</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Redirect</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Revision</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Searchindex</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.SiteStat</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.TagSummary</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Templatelink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Text</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Transcache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Updatelog</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Uploadstash</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.User</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.UserFormerGroup</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.UserGroup</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.UserNewtalk</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.UserProperty</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.ValidTag</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Watchlist</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdarchive</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdcategory</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdcategorylink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdchangeTag</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdexternalUser</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdexternallink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdfilearchive</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdhitcounter</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdimage</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdimagelink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdinterwiki</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdipblock</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdiwlink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdjob</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdl10nCache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdlanglink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdlogSearch</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdlogging</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdmoduleDep</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdmsgResource</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdmsgResourceLink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdobjectcache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdoldimage</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdpage</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdpageProp</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdpageRestriction</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdpagelink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdprotectedTitle</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdquerycache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdquerycacheInfo</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdquerycachetwo</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdrecentchange</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdredirect</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdrevision</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdsearchindex</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdsiteIdentifier</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdsiteStat</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdsite</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdtagSummary</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdtemplatelink</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdtext</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdtranscache</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdupdatelog</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wduploadstash</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wduser</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WduserFormerGroup</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WduserGroup</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WduserNewtalk</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WduserProperty</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.WdvalidTag</class>
+		<class>artcitlocator.crawling.wikipedia.database.entity.Wdwatchlist</class>
+
+		<properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.2.121:3306/wikiDump" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="root" />
+ 
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+        </properties>
+	</persistence-unit>
+</persistence>

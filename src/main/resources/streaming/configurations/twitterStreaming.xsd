@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<xs:element name="TwitterRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Twitter" type="TwitterAccount" />
+				<xs:element name="RMI" type="RMI_Information" />
+				<xs:sequence>
+					<xs:element name="RMIPlugIns" type="RMI_Information"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:element name="WaitTime" type="xs:int" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="TwitterAccount">
+		<xs:sequence>
+			<xs:element name="OAuthConsumerKey" type="xs:string" />
+			<xs:element name="OAuthConsumerSecret" type="xs:string" />
+			<xs:element name="OAuthAccessToken" type="xs:string" />
+			<xs:element name="OAuthAccessTokenSecret" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="RMI_Information">
+		<xs:sequence>
+			<xs:element name="RemoteHost" type="xs:string" />
+			<xs:element name="RemotePort" type="xs:int" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+</xs:schema>

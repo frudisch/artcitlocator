@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xs:element name="tweetList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" type="Tweet" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Tweet">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string" />
+			<xs:element name="isRetweet" type="xs:boolean" />
+			<xs:element name="createTime" type="xs:long" />
+			<xs:element name="favoriteCount" type="xs:int" />
+			<xs:element name="retweetCount" type="xs:int" />
+			<xs:element name="source" type="xs:string" />
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="language" type="xs:string" />
+			<xs:element name="user" type="User" />
+			<xs:element name="geoPos" type="GeoPosition" />
+			<xs:element name="place" type="Place" />
+			<xs:sequence>
+				<xs:element name="mediaEntities" type="MediaEntity"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="hashtags" type="Hashtag" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="symbols" type="Symbol" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="urlEntities" type="URL" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="User">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="userID" type="xs:long" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="GeoPosition">
+		<xs:sequence>
+			<xs:element name="xCoord" type="xs:double" />
+			<xs:element name="yCoord" type="xs:double" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="Place">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="country" type="xs:string" />
+			<xs:element name="countryCode" type="xs:string" />
+			<xs:element name="streetAddress" type="xs:string" />
+			<xs:element name="geoPos" type="GeoPosition" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="Hashtag">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="MediaEntity">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="Symbol">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="URL">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" />
+	</xs:complexType>
+</xs:schema>
