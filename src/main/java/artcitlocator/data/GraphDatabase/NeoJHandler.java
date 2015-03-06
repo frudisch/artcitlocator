@@ -1,4 +1,4 @@
-package artcitlocator.data.graphDatabase;
+package artcitlocator.data.GraphDatabase;
 
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.GraphDatabaseService;

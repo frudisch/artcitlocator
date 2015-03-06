@@ -1,7 +1,7 @@
 package artcitlocator.crawling.control;
 
 import artcitlocator.crawling.wikipedia.xml.parser.WikiParser;
-import artcitlocator.data.graphDatabase.NeoJHandler;
+import artcitlocator.data.GraphDatabase.NeoJHandler;
 
 public class Controller {
 

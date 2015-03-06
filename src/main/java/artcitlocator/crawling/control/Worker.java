@@ -2,7 +2,7 @@ package artcitlocator.crawling.control;
 
 import edu.jhu.nlp.wikipedia.WikiPage;
 import artcitlocator.crawling.control.data.City;
-import artcitlocator.data.graphDatabase.NeoJHandler;
+import artcitlocator.data.GraphDatabase.NeoJHandler;
 
 public class Worker {
 
