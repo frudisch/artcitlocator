@@ -12,8 +12,8 @@ import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.graphdb.schema.Schema;
 import org.neo4j.rest.graphdb.RestGraphDatabase;
 
-import artcitlocator.crawling.control.data.City;
-import artcitlocator.crawling.control.data.Entity;
+import artcitlocator.wikipedia.crawling.control.data.City;
+import artcitlocator.wikipedia.crawling.control.data.Entity;
 
 public class NeoJHandler {
 

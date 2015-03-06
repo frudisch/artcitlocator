@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
-import artcitlocator.crawling.control.data.Entity;
+import artcitlocator.wikipedia.crawling.control.data.Entity;
 
 public class StanfordNER {
 	private AbstractSequenceClassifier<?> classifier;
