@@ -7,20 +7,20 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import artcitlocator.control.StanfordNER;
+import artcitlocator.control.NERAnalyze;
 import artcitlocator.wikipedia.crawling.control.data.City;
 import artcitlocator.wikipedia.crawling.control.data.Entity;
 
 public class CityCreator {
 
 	private static final String clfFilename = null;
-	private LonLatParser llp;
-	private StanfordNER ner;
+	private LatitudeLongitudeParser llp;
+	private NERAnalyze ner;
 	private WikiTextCleaner cleaner;
 	
 	public CityCreator() {
-		this.llp = new LonLatParser();
-		this.ner = new artcitlocator.control.StanfordNER(clfFilename);
+		this.llp = new LatitudeLongitudeParser();
+		this.ner = new NERAnalyze(clfFilename);
 		this.cleaner = new WikiTextCleaner();
 	}
 
@@ -44,7 +44,7 @@ public class CityCreator {
 			return null;
 		}
 		
-		coords = llp.getLonLat(text);
+		coords = llp.parseLatLon(text);
 		
 		if(coords == null){
 			return null;

@@ -8,6 +8,7 @@ public class Worker {
 
 	private NeoJHandler dbHandler;
 	private CityCreator cityCreator;
+	private int counter = 0;
 
 	public Worker(NeoJHandler dbHandler) {
 		this.dbHandler = dbHandler;
@@ -16,6 +17,9 @@ public class Worker {
 
 	public void process(WikiPage page) {
 		City temp = cityCreator.extractCity(page.getTitle(), page.getText());
+		
+		counter = counter++;
+		System.out.println(counter);
 		
 		if(temp != null){
 			dbHandler.saveCity(temp);

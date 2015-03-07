@@ -14,20 +14,21 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import artcitlocator.wikipedia.crawling.control.data.Entity;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
-import artcitlocator.wikipedia.crawling.control.data.Entity;
 
-public class StanfordNER {
+public class NERAnalyze {
+
 	private AbstractSequenceClassifier<?> classifier;
 	private String serializedClassifier;
-
-	public StanfordNER(String clfFilename)
+	
+	public NERAnalyze(String clfFilename)
 	{
 		serializedClassifier = clfFilename;
 		classifier = CRFClassifier.getClassifierNoExceptions(serializedClassifier);
 	}
-
+	
 	public ArrayList<Entity> extractEntities(String text) throws IOException, ParserConfigurationException, SAXException{
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
@@ -54,31 +55,5 @@ public class StanfordNER {
 		}
 		
 		return entities;
-	}
-	
-	/**
-	 * returns the actual serialized Classifier
-	 * @return serializedClassifier
-	 */
-	public String getSerializedClassifier()
-	{
-		return serializedClassifier;
-	}
-
-	/**
-	 * sets the current serializedClassifier
-	 * @param serializedClassifier
-	 */
-	public void setSerializedClassifier(String serializedClassifier)
-	{
-		this.serializedClassifier = serializedClassifier;
-	}
-	
-	/**
-	 * returns the current CRFClassifier
-	 * @return CRFClassifier<?>
-	 */
-	public CRFClassifier<?> getClassifier(){
-		return (CRFClassifier<?>) classifier;
 	}
 }

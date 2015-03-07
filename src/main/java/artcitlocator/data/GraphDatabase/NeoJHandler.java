@@ -1,5 +1,7 @@
 package artcitlocator.data.GraphDatabase;
 
+import java.util.ArrayList;
+
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
@@ -9,16 +11,19 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
+import org.neo4j.graphdb.index.RelationshipIndex;
 import org.neo4j.graphdb.schema.Schema;
 import org.neo4j.rest.graphdb.RestGraphDatabase;
+import org.neo4j.tooling.GlobalGraphOperations;
 
 import artcitlocator.wikipedia.crawling.control.data.City;
+import artcitlocator.wikipedia.crawling.control.data.ConnectionCityEntity;
 import artcitlocator.wikipedia.crawling.control.data.Entity;
 
 public class NeoJHandler {
 
 	public static String HOST = "localhost";
-	public static int PORT = 7878;
+	public static int PORT = 7474;
 	public static String DATABASE = "db";
 
 	private static NeoJHandler instance;
@@ -28,6 +33,7 @@ public class NeoJHandler {
 	private Label entityLabel = DynamicLabel.label("Entity");
 	private Index<Node> entities;
 	private Index<Node> cities;
+	private RelationshipIndex relationships;
 
 	private NeoJHandler() {
 		gds = new RestGraphDatabase("http://localhost:7474/db/data");
@@ -40,6 +46,7 @@ public class NeoJHandler {
 		IndexManager index = gds.index();
 		entities = index.forNodes(entityLabel.name());
 		cities = index.forNodes(cityLabel.name());
+		relationships = index.forRelationships(RelationshipTypes.IN.name());
 		try {
 			schema.indexFor(entityLabel).on("nameType").create();
 		} catch (Exception e) {
@@ -124,6 +131,7 @@ public class NeoJHandler {
 		
 		relationship = entityNode.createRelationshipTo(cityNode, RelationshipTypes.IN);
 		relationship.setProperty("count", 1);
+		relationships.add(relationship, "entity -> city", entityNode.getProperty("name") + " -> " + cityNode.getProperty("name"));
 		
 		tx.success();
 		tx.close();
@@ -139,5 +147,51 @@ public class NeoJHandler {
 		}
 
 		return instance;
+	}
+
+	public long[] getAllRelationIDs() {
+		Transaction tx = gds.beginTx();	
+		ArrayList<Long> list = new ArrayList<Long>();
+		long[] rc;
+		Iterable<Relationship> relationships = GlobalGraphOperations.at(gds).getAllRelationships();
+		
+		for (Relationship relationship : relationships) {
+			list.add(relationship.getId());
+		}
+		
+		rc = new long[list.size()];
+		for (int i = 0; i < rc.length; i++) {
+			rc[i] = list.get(i);
+		}
+		
+		tx.success();
+		tx.close();
+		return rc;
+	}
+
+	public ConnectionCityEntity getRelationByID(long i) {
+		Transaction tx = gds.beginTx();	
+		ConnectionCityEntity rc = new ConnectionCityEntity();
+		
+		Relationship rel = gds.getRelationshipById(i);
+		
+		Node entity = rel.getStartNode();
+		
+		rc.setCounterConnection((int) rel.getProperty("count"));
+		rc.setCounterEntity((int) entity.getProperty("counter"));
+		
+		tx.success();
+		tx.close();
+		return rc;
+	}
+
+	public void storeRelationWeight(long i, double weight) {
+		Transaction tx = gds.beginTx();	
+		
+		Relationship rel = gds.getRelationshipById(i);
+		rel.setProperty("weight", weight);
+		
+		tx.success();
+		tx.close();
 	}
 }

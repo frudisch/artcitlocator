@@ -65,6 +65,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>4.3.8.Final</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -163,26 +164,6 @@
 							</goals>
 						</execution>
 					</executions>
-
-					<configuration>
-						<transformSchemas>
-							<transformSchema>
-								<uri>http://www.example.org/employee</uri>
-								<toPrefix>empns</toPrefix>
-								<toFile>employee.xsd</toFile>
-							</transformSchema>
-							<transformSchema>
-								<uri>http://www.example.org/address</uri>
-								<toPrefix>addrns</toPrefix>
-								<toFile>address.xsd</toFile>
-							</transformSchema>
-						</transformSchemas>
-						<includes>
-							<include>com/journaldev/bean/*</include>
-						</includes>
-						<verbose>true</verbose>
-
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
