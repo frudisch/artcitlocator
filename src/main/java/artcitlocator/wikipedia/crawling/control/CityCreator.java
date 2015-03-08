@@ -1,11 +1,6 @@
 package artcitlocator.wikipedia.crawling.control;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import artcitlocator.control.NERAnalyze;
 import artcitlocator.wikipedia.crawling.control.data.City;
@@ -13,7 +8,7 @@ import artcitlocator.wikipedia.crawling.control.data.Entity;
 
 public class CityCreator {
 
-	private static final String clfFilename = null;
+	private static final String clfFilename = "./classifiers/english.muc.7class.distsim.crf.ser.gz";
 	private LatitudeLongitudeParser llp;
 	private NERAnalyze ner;
 	private WikiTextCleaner cleaner;
@@ -31,18 +26,7 @@ public class CityCreator {
 		
 		if(!checkIfCity(text)) return null;
 	
-		try {
-			entities = ner.extractEntities(cleaner.cleanText(text));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			return null;
-		} catch (SAXException e) {
-			e.printStackTrace();
-			return null;
-		}
+		entities = ner.extractEntities(cleaner.cleanText(text));
 		
 		coords = llp.parseLatLon(text);
 		

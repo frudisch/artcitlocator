@@ -18,7 +18,7 @@ public class Worker {
 	public void process(WikiPage page) {
 		City temp = cityCreator.extractCity(page.getTitle(), page.getText());
 		
-		counter = counter++;
+		counter = counter + 1;
 		System.out.println(counter);
 		
 		if(temp != null){

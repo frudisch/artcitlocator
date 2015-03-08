@@ -8,12 +8,12 @@ import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.graphdb.index.RelationshipIndex;
 import org.neo4j.graphdb.schema.Schema;
-import org.neo4j.rest.graphdb.RestGraphDatabase;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 import artcitlocator.wikipedia.crawling.control.data.City;
@@ -36,8 +36,9 @@ public class NeoJHandler {
 	private RelationshipIndex relationships;
 
 	private NeoJHandler() {
-		gds = new RestGraphDatabase("http://localhost:7474/db/data");
+//		gds = new RestGraphDatabase("http://localhost:7474/");
 // 		gds = new RestGraphDatabase("http://localhost:7474/db/data",username,password);
+		gds =  new GraphDatabaseFactory().newEmbeddedDatabase("E:/Projekt/workspace/graphdb");
 
 		Schema schema;
 		Transaction tx = gds.beginTx();
@@ -50,7 +51,7 @@ public class NeoJHandler {
 		try {
 			schema.indexFor(entityLabel).on("nameType").create();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("zu erwartende Exception geflogen");
 		}
 
 		tx.success();

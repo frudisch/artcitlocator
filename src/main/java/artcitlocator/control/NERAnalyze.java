@@ -21,15 +21,13 @@ import edu.stanford.nlp.ie.crf.CRFClassifier;
 public class NERAnalyze {
 
 	private AbstractSequenceClassifier<?> classifier;
-	private String serializedClassifier;
 	
 	public NERAnalyze(String clfFilename)
 	{
-		serializedClassifier = clfFilename;
-		classifier = CRFClassifier.getClassifierNoExceptions(serializedClassifier);
+		classifier = CRFClassifier.getClassifierNoExceptions(clfFilename);
 	}
 	
-	public ArrayList<Entity> extractEntities(String text) throws IOException, ParserConfigurationException, SAXException{
+	public ArrayList<Entity> extractEntities(String text) {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 		String resultInXml = classifier.classifyToString(text, "xml", false);
@@ -38,11 +36,26 @@ public class NERAnalyze {
 		buffer.append("</root>");
 		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
+		DocumentBuilder db;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			return null;
+		}
 		InputSource is = new InputSource();
 		is.setCharacterStream(new StringReader(buffer.toString()));
 		
-		Document doc = db.parse(is);
+		Document doc;
+		try {
+			doc = db.parse(is);
+		} catch (SAXException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		NodeList nodes = doc.getElementsByTagName("wi");
 		
 		for (int i = 0; i < nodes.getLength(); i++){
@@ -55,5 +68,10 @@ public class NERAnalyze {
 		}
 		
 		return entities;
+	}
+	
+	public static void main(String[] args) {
+		NERAnalyze test = new NERAnalyze("./classifiers/english.muc.7class.distsim.crf.ser.gz");
+		test.extractEntities("HI");
 	}
 }
