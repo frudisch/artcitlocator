@@ -108,6 +108,11 @@
 			<version>3.4.1</version>
 			<classifier>models</classifier>
 		</dependency>
+		<dependency>
+        	<groupId>edu.uci.ics</groupId>
+        	<artifactId>crawler4j</artifactId>
+        <version>4.1</version>
+    	</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
