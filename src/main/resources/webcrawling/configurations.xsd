@@ -1,0 +1,18 @@
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="crawler_config">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="crawler" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType mixed="true">
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+              <xs:element type="xs:anyURI" name="seed" maxOccurs="unbounded" minOccurs="1"/>
+              <xs:element type="xs:string" name="pattern" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="name" use="required"/>
+            <xs:attribute type="xs:anyURI" name="url" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

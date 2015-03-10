@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<crawler_config 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="configurations.xsd">
+   <crawler name="NYT" url="http://www.nytimes.com/">
+      <seed>http://www.nytimes.com/</seed>
+      <seed>http://www.nytimes.com/2015/03/11/us/politics/with-foreign-leaders-obama-keeps-it-mostly-business.html</seed>
+      <pattern>.*http://www.nytimes.com/.*html$</pattern>
+   </crawler>
+</crawler_config>
