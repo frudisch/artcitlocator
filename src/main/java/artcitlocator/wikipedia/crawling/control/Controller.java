@@ -15,11 +15,13 @@ public class Controller {
 		NeoJHandler dbhandler = NeoJHandler.getInstance();
 		
 		Worker worker = new Worker(dbhandler);
+		WorkerFactory.getInstance(dbhandler, 8);
 		
 		WikiParser parser = new WikiParser(worker);
 		
 		System.out.println("Starte Parsing");
 		parser.saxParsing(path);
+//		parser.domParsing(path);
 		
 		Calculator calc = new ECalculator(dbhandler);
 		

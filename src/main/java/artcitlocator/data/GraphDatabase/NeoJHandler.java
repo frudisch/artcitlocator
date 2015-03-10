@@ -73,7 +73,11 @@ public class NeoJHandler {
 		tx.close();
 
 		for (Entity entity : city.getEntities()) {
-			saveEntity(entity, cityNode);
+			if(entity.getName() == null){
+				System.out.println(city.getName());
+			}else{
+				saveEntity(entity, cityNode);
+			}
 		}
 	}
 
@@ -93,6 +97,8 @@ public class NeoJHandler {
 			entityNode.setProperty("counter", 1);
 			entityNode.setProperty("idf", entity.getIdf());
 			
+			entities.add(entityNode, "name, type", entity.getName() + ", " + entity.getType());
+			
 			createConnection(cityNode, entityNode);
 		} else {
 			counter = Integer.valueOf((String) entityNode.getProperty("counter"));
@@ -102,8 +108,6 @@ public class NeoJHandler {
 			
 			updateConnection(cityNode, entityNode);
 		}
-
-		entities.add(entityNode, "name, type", entity.getName() + ", " + entity.getType());
 
 		tx.success();
 		tx.close();
