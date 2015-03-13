@@ -2,20 +2,22 @@ package artcitlocator.wikipedia.crawling.control;
 
 import java.util.ArrayList;
 
-import artcitlocator.control.NERAnalyze;
+import artcitlocator.control.POSAnalyze;
 import artcitlocator.wikipedia.crawling.control.data.City;
 import artcitlocator.wikipedia.crawling.control.data.Entity;
 
 public class CityCreator {
 
-	private static final String clfFilename = "./classifiers/english.muc.7class.distsim.crf.ser.gz";
+//	private static final String clfFilename = "./classifiers/english.muc.7class.distsim.crf.ser.gz";
 	private LatitudeLongitudeParser llp;
-	private NERAnalyze ner;
+//	private NERAnalyze ner;
 	private WikiTextCleaner cleaner;
+	private POSAnalyze pos;
 	
 	public CityCreator() {
 		this.llp = new LatitudeLongitudeParser();
-		this.ner = new NERAnalyze(clfFilename);
+//		this.ner = new NERAnalyze(clfFilename);
+		this.pos = new POSAnalyze();
 		this.cleaner = new WikiTextCleaner();
 	}
 
@@ -26,7 +28,14 @@ public class CityCreator {
 		
 		if(!checkIfCity(text)) return null;
 	
-		entities = ner.extractEntities(cleaner.cleanText(text));
+//		entities = ner.extractEntities(cleaner.cleanText(text));
+		try{
+			entities = pos.tagText(cleaner.cleanText(text));
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(text);
+			return null;
+		}
 		
 		coords = llp.parseLatLon(text);
 		

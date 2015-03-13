@@ -103,6 +103,7 @@ public class City implements Comparable<City>{
 	}
 
 	public ArrayList<Entity> getEntities() {
+		if(entities == null) entities = new ArrayList<Entity>();
 		return entities;
 	}
 

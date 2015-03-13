@@ -1,6 +1,5 @@
 package artcitlocator.wikipedia.xml.parser;
 
-import artcitlocator.wikipedia.crawling.control.Worker;
 import artcitlocator.wikipedia.crawling.control.WorkerFactory;
 import edu.jhu.nlp.wikipedia.PageCallbackHandler;
 import edu.jhu.nlp.wikipedia.WikiPage;
@@ -10,10 +9,11 @@ import edu.jhu.nlp.wikipedia.WikiXMLParserFactory;
 
 public class WikiParser {
 
-	private Worker worker;
 
-	public WikiParser(Worker worker) {
-		this.worker = worker;
+	private WorkerFactory factory;
+
+	public WikiParser(WorkerFactory factory) {
+		this.factory = factory;
 	}
 
 	/**
@@ -29,7 +29,8 @@ public class WikiParser {
 			while (it.hasMorePages()) {
 				WikiPage page = it.nextPage();
 				// worker.process(page);
-				WorkerFactory.getInstance().addPage(page);
+				factory.addPage(page);
+				sleep();
 			}
 
 		} catch (Exception e) {
@@ -44,12 +45,21 @@ public class WikiParser {
 			wxsp.setPageCallback(new PageCallbackHandler() {
 				public void process(WikiPage page) {
 					// worker.process(page);
-					WorkerFactory.getInstance().addPage(page);
+					factory.addPage(page);
+					sleep();
 				}
 			});
 
 			wxsp.parse();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void sleep() {
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}

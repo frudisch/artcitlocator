@@ -12,6 +12,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import artcitlocator.wikipedia.crawling.control.worker.DatabaseHandler;
 import artcitlocator.wikipedia.database.entity.Text;
 
 public class WikipediaDBHandler {

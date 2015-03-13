@@ -3,8 +3,25 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-	<persistence-unit name="artcitlocator">
 
+	<persistence-unit name="artcitlocator_temp">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>artcitlocator.wikipedia.crawling.rational.database.entity.WikiEntry</class>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.2.121:3306/wikipedia" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="artcitlocator">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>artcitlocator.wikipedia.database.entity.Archive</class>
 		<class>artcitlocator.wikipedia.database.entity.Category</class>
 		<class>artcitlocator.wikipedia.database.entity.Categorylink</class>
@@ -108,14 +125,14 @@
 		<class>artcitlocator.wikipedia.database.entity.Wdwatchlist</class>
 
 		<properties>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.2.121:3306/wikiDump" />
-            <property name="javax.persistence.jdbc.user" value="root" />
-            <property name="javax.persistence.jdbc.password" value="root" />
- 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-        </properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.2.121:3306/wikiDump" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
 	</persistence-unit>
 </persistence>

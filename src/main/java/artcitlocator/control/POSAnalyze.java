@@ -1,5 +1,8 @@
 package artcitlocator.control;
 
+import java.util.ArrayList;
+
+import artcitlocator.wikipedia.crawling.control.data.Entity;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class POSAnalyze {
@@ -10,11 +13,18 @@ public class POSAnalyze {
 		tagger = new MaxentTagger("edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger");
 	}
 
-	public void tagText(String text) {
-
+	public ArrayList<Entity> tagText(String text) {
+		ArrayList<Entity> rc = new ArrayList<Entity>();
 		String tagged = tagger.tagString(text);
-
-		System.out.println(tagged);
+		
+		String[] tagArr = tagged.split(" ");
+		for (int i = 0; i < tagArr.length; i++) {
+			String name = tagArr[i].split("_")[0].trim().toLowerCase();
+			String type = tagArr[i].split("_")[1].trim().toLowerCase();
+			if(type.equals("nn") || type.equals("nnp"))	rc.add(new Entity(name, type));
+		}
+		
+		return rc;
 	}
 
 	public static void main(String[] args) {
@@ -22,6 +32,10 @@ public class POSAnalyze {
 
 		POSAnalyze test = new POSAnalyze();
 		
-		test.tagText(text);
+		ArrayList<Entity> reCode = test.tagText(text);
+		
+		for (Entity entity : reCode) {
+			System.out.println(entity.getName() + " Type: " + entity.getType());
+		}
 	}
 }
