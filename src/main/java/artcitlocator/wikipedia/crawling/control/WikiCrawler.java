@@ -26,6 +26,15 @@ public class WikiCrawler {
 			page.setWikiText(entry.getText());
 			
 			factory.addPage(page);
+			sleep();
+		}
+	}
+
+	private void sleep() {
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }

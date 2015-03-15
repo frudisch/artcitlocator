@@ -23,7 +23,8 @@ public class GraphDBWorker implements Worker{
 	}
 
 	public GraphDBWorker() {
-		
+		this.toDo = new ArrayDeque<WikiPage>();
+		this.cityCreator = new CityCreator();
 	}
 
 	public void process(WikiPage page) {
@@ -54,6 +55,7 @@ public class GraphDBWorker implements Worker{
 				sleep();
 			}
 		}
+		dbHandler.shutdown();
 	}
 
 	private void sleep() {

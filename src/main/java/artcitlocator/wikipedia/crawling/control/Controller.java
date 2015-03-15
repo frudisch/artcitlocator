@@ -37,6 +37,13 @@ public class Controller {
 		
 		WorkerFactory factory = new WorkerFactory(dbhandler, 8, new GraphDBWorker());
 		
+		Thread t = new Thread(factory);
+		t.start();
+		
+		WikiCrawler crawler = new WikiCrawler(factory, new RationalDatabaseHandler());
+		
+		crawler.crawlDatabase();
+		
 		factory.join();
 	}
 	
@@ -51,9 +58,9 @@ public class Controller {
 	}
 	
 	public void doWork(String path){
-		saveWikiInDatabase(path);
+//		saveWikiInDatabase(path);
 		
-//		crawlWikiDatabase();
+		crawlWikiDatabase();
 		
 //		calculate();
 		

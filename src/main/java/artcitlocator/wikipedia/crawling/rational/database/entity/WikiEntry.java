@@ -17,7 +17,7 @@ public class WikiEntry implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
-	private int id;
+	private long id;
 	
 	@Column(name="page_title")
 	private String title;
@@ -26,11 +26,11 @@ public class WikiEntry implements Serializable{
 	@Column(name="page_text", length = 10000000)
 	private String text;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

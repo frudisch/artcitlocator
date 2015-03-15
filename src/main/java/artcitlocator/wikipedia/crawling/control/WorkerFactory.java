@@ -42,7 +42,7 @@ public class WorkerFactory implements Runnable {
 			try {
 				if (pageList.size() == 0) {
 					sleep();
-				} else {
+				} else {					
 					workerList.get(pos).process(pageList.get(0));
 
 					counter = counter + 1;
@@ -70,7 +70,7 @@ public class WorkerFactory implements Runnable {
 	}
 
 	public void addPage(WikiPage page) {
-		pageList.add(page);
+		if(checkCity(page.getText())) pageList.add(page);
 	}
 	
 	public void join(){
@@ -81,5 +81,9 @@ public class WorkerFactory implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean checkCity(String text) {
+		return text.replaceAll("\\s", "").contains("|population");		
 	}
 }

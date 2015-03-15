@@ -26,7 +26,7 @@ public class CityCreator {
 		double[] coords;
 		City city = null;
 		
-		if(!checkIfCity(text)) return null;
+//		if(!checkIfCity(text)) return null;
 	
 //		entities = ner.extractEntities(cleaner.cleanText(text));
 		try{
@@ -53,8 +53,4 @@ public class CityCreator {
 		return city;
 	}
 
-	public boolean checkIfCity(String text) {
-		return text.replaceAll("\\s", "").contains("|population");
-		
-	}
 }

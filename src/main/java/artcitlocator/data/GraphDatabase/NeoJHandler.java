@@ -23,57 +23,40 @@ import artcitlocator.wikipedia.crawling.control.worker.DatabaseHandler;
 
 public class NeoJHandler implements DatabaseHandler{
 
-	public static String HOST = "localhost";
+	public static String HOST = "192.168.2.121";
 	public static int PORT = 7474;
 	public static String DATABASE = "db";
+	
+	public static String COUNT = "count";
+	public static String NAME = "name";
+	public static String LONGITUDE = "lon";
+	public static String LATITUDE = "lat";
+	public static String WEIGHT = "weight";
 
 	private static NeoJHandler instance;
 
 	private GraphDatabaseService gds;
 	private Label cityLabel = DynamicLabel.label("City");
 	private Label entityLabel = DynamicLabel.label("Entity");
-//	private Index<Node> entities;
-//	private Index<Node> cities;
-//	private RelationshipIndex relationships;
-//	private ExecutionEngine engine;
 	private RestCypherQueryEngine engine;
 
 	private NeoJHandler() {
 //		gds = new RestGraphDatabase("http://localhost:7474/");
 // 		gds = new RestGraphDatabase("http://localhost:7474/db/data",username,password);
 //		gds =  new GraphDatabaseFactory().newEmbeddedDatabase("E:/Projekt/workspace/graphdb");
-		RestAPI api = new RestAPIFacade("http://localhost:7474/db/data/");
+		RestAPI api = new RestAPIFacade("http://" + HOST + ":" + PORT + "/db/data/");
 		gds = new RestGraphDatabase(api);
 		engine = new RestCypherQueryEngine(api);
-
-//		Schema schema;
-//		Transaction tx = gds.beginTx();
-//
-//		schema = gds.schema();
-//		IndexManager index = gds.index();
-//		entities = index.forNodes(entityLabel.name());
-//		cities = index.forNodes(cityLabel.name());
-//		relationships = index.forRelationships(RelationshipTypes.IN.name());
-//		try {
-//			schema.indexFor(entityLabel).on("nameType").create();
-//		} catch (Exception e) {
-//			System.out.println("zu erwartende Exception geflogen");
-//		}
-//
-//		tx.success();
-//		tx.close();
 	}
 
 	public void saveCity(City city) {
 		Transaction tx = gds.beginTx();
 		Node cityNode;
-
-//		long start = System.currentTimeMillis();
 		
 		cityNode = gds.createNode(cityLabel);
-		cityNode.setProperty("name", city.getName());
-		cityNode.setProperty("latitude", city.getLati());
-		cityNode.setProperty("longitude", city.getLongi());
+		cityNode.setProperty(NAME, city.getName());
+		cityNode.setProperty(LATITUDE, city.getLati());
+		cityNode.setProperty(LONGITUDE, city.getLongi());
 
 //		cities.add(cityNode, cityLabel.name(), city.getName());
 
@@ -81,25 +64,19 @@ public class NeoJHandler implements DatabaseHandler{
 		tx.close();
 
 		for (Entity entity : city.getEntities()) {
-			if(entity.getName() == null){
-				System.out.println(city.getName());
-			}else{
-				saveEntity(entity, cityNode);
-			}
+			saveEntity(entity, cityNode);
 		}
-		
-//		System.out.println("Stadt speichern dauert: " + (System.currentTimeMillis() - start));
 	}
 
 	private void saveEntity(Entity entity, Node cityNode) {
 		Transaction tx = gds.beginTx();
-		int counter;
+		int count;
 		Node entityNode = null;
 //		IndexHits<Node> entHit;
 
 //		entHit = entities.get("name, type", entity.getName() + ", " + entity.getType());
 //		entityNode = entHit.getSingle();
-		QueryResult<Map<String,Object>> result = engine.query("MATCH (node:" + entityLabel.name() + ") WHERE node.name = \"" + entity.getName() + "\" RETURN node", null);
+		QueryResult<Map<String,Object>> result = engine.query("MATCH (node:" + entityLabel.name() + ") WHERE node." + NAME + " = \"" + entity.getName() + "\" RETURN node", null);
 
 		for (Map<String, Object> row : result) {
 			entityNode = (Node) row.get("node");
@@ -107,51 +84,46 @@ public class NeoJHandler implements DatabaseHandler{
 
 		if (entityNode == null) {
 			entityNode = gds.createNode(entityLabel);
-			entityNode.setProperty("name", entity.getName());
-			entityNode.setProperty("type", entity.getType());
-			entityNode.setProperty("counter", 1);
-			entityNode.setProperty("idf", entity.getIdf());
+			entityNode.setProperty(NAME, entity.getName());
+			entityNode.setProperty(COUNT, 1);
+			entityNode.setProperty(WEIGHT, entity.getIdf());
 			
 //			entities.add(entityNode, "name, type", entity.getName() + ", " + entity.getType());
 			
 			createConnection(cityNode, entityNode);
 		} else {
-			counter = (int) entityNode.getProperty("counter");
-			entityNode.removeProperty("counter");
-			++counter;
-			entityNode.setProperty("counter", counter);
+			count = (int) entityNode.getProperty(COUNT);
+			entityNode.removeProperty(COUNT);
+			count = count + 1;
+			entityNode.setProperty(COUNT, count);
 			
-			updateConnection(cityNode, entityNode);
+			createConnection(cityNode, entityNode);
 		}
 
-		tx.success();
-		tx.close();
-	}
-
-	private void updateConnection(Node cityNode, Node entityNode) {
-		Transaction tx = gds.beginTx();	
-		
-		for (Relationship rel : entityNode.getRelationships()) {
-			if(rel.getOtherNode(entityNode).equals(cityNode)){
-				int count = (int) rel.getProperty("count");
-				rel.removeProperty("count");
-				count = count + 1;
-				rel.setProperty("count", count);
-				break;
-			}
-		}
-		
 		tx.success();
 		tx.close();
 	}
 
 	private void createConnection(Node cityNode, Node entityNode) {
 		Transaction tx = gds.beginTx();	
-		Relationship relationship;
+		Relationship relationship = null;
 		
-		relationship = entityNode.createRelationshipTo(cityNode, RelationshipTypes.IN);
-		relationship.setProperty("count", 1);
-//		relationships.add(relationship, "entity -> city", entityNode.getProperty("name") + " -> " + cityNode.getProperty("name"));
+//		MATCH (entity { name:'?' })-[r]->(city { name: '?' })RETURN r
+		QueryResult<Map<String,Object>> result = engine.query("MATCH (entity { " + NAME + ":'" + entityNode.getProperty(NAME) + "' })-[r:IN]->(city { " + NAME + ": '" + cityNode.getProperty(NAME) + "' })RETURN r", null);
+		
+		for (Map<String, Object> row : result) {
+			relationship = (Relationship) row.get("r");
+		}
+		
+		if(relationship == null){
+			relationship = entityNode.createRelationshipTo(cityNode, RelationshipTypes.IN);
+			relationship.setProperty(COUNT, 1);
+		}else{
+			int count = (int) relationship.getProperty(COUNT);
+			relationship.removeProperty(COUNT);
+			count = count + 1;
+			relationship.setProperty(COUNT, count);
+		}
 		
 		tx.success();
 		tx.close();
@@ -197,8 +169,8 @@ public class NeoJHandler implements DatabaseHandler{
 		
 		Node entity = rel.getStartNode();
 		
-		rc.setCounterConnection((int) rel.getProperty("count"));
-		rc.setCounterEntity((int) entity.getProperty("counter"));
+		rc.setCounterConnection((int) rel.getProperty(COUNT));
+		rc.setCounterEntity((int) entity.getProperty(COUNT));
 		
 		tx.success();
 		tx.close();
@@ -219,11 +191,17 @@ public class NeoJHandler implements DatabaseHandler{
 		NeoJHandler test = new NeoJHandler();
 		
 		City city = new City("TESTStadt", 22.22, 33.33);
+		City cityZwo = new City("stadt", 22.22, 33.33);
 		
 		for (int i = 0; i < 10; i++) {
 			city.getEntities().add(new Entity("test", ""));
+			cityZwo.getEntities().add(new Entity("test", ""));
+			
+			city.getEntities().add(new Entity("nomalo", ""));
+			cityZwo.getEntities().add(new Entity("nomalo", ""));
 		}
 		
 		test.saveCity(city);
+		test.saveCity(cityZwo);
 	}
 }

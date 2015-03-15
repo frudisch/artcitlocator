@@ -21,7 +21,7 @@ public class POSAnalyze {
 		for (int i = 0; i < tagArr.length; i++) {
 			String name = tagArr[i].split("_")[0].trim().toLowerCase();
 			String type = tagArr[i].split("_")[1].trim().toLowerCase();
-			if(type.equals("nn") || type.equals("nnp"))	rc.add(new Entity(name, type));
+			rc.add(new Entity(name, type));
 		}
 		
 		return rc;

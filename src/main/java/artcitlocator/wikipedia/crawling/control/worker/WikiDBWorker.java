@@ -30,6 +30,7 @@ public class WikiDBWorker implements Worker{
 				sleep();
 			}
 		}
+		dbHandler.shutdown();
 	}
 
 	private void sleep() {
